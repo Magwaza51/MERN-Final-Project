@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
-import { SocketProvider } from './context/SocketContext';
-import { NotificationProvider } from './context/NotificationContext';
+// import { SocketProvider } from './context/SocketContext';
+// import { NotificationProvider } from './context/NotificationContext';
 import Navbar from './components/Navbar';
 import SidebarLayout from './components/SidebarLayout';
 import Home from './pages/Home';
@@ -27,8 +27,6 @@ import PrivateRoute from './components/PrivateRoute';
 function App() {
   return (
     <AuthProvider>
-      <SocketProvider>
-        <NotificationProvider>
           <Router
             future={{
               v7_startTransition: true,
@@ -167,8 +165,6 @@ function App() {
               />
             </div>
           </Router>
-        </NotificationProvider>
-      </SocketProvider>
     </AuthProvider>
   );
 }
