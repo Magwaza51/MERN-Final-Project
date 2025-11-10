@@ -1,27 +1,10 @@
 {
-  "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "build",
-  "routes": [
+  "rewrites": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/manifest.json"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  ],
-  "env": {
-    "REACT_APP_API_URL": "https://mern-final-project-735f.onrender.com",
-    "REACT_APP_SERVER_URL": "https://mern-final-project-735f.onrender.com"
-  }
+  ]
 }
