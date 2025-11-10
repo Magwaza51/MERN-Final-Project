@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useNotifications } from '../context/NotificationContext';
-import NotificationDropdown from './NotificationDropdown';
-import ConnectionStatus from './ConnectionStatus';
+// import { useNotifications } from '../context/NotificationContext';
+// import NotificationDropdown from './NotificationDropdown';
+// import ConnectionStatus from './ConnectionStatus';
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
-  const { unreadCount } = useNotifications();
+  // const { unreadCount } = useNotifications();
   const [showNotifications, setShowNotifications] = useState(false);
 
   const handleLogout = () => {
@@ -35,11 +35,11 @@ const Navbar = () => {
               <Link to="/advanced-appointments" className="nav-link">📅 Appointments</Link>
               <Link to="/medical-records" className="nav-link">📋 Records</Link>
               <Link to="/ai-assistant" className="nav-link">🤖 AI Assistant</Link>
-              <Link to="/telemedicine" className="nav-link">� Telemedicine</Link>
+              <Link to="/telemedicine" className="nav-link">📹 Telemedicine</Link>
               <Link to="/emergency" className="nav-link emergency-btn">🚨 Emergency</Link>
               
-              {/* Notification Bell */}
-              <div className="notification-wrapper">
+              {/* Notification Bell - Removed for deployment */}
+              {/* <div className="notification-wrapper">
                 <button 
                   className="notification-bell"
                   onClick={toggleNotifications}
@@ -52,7 +52,7 @@ const Navbar = () => {
                 {showNotifications && (
                   <NotificationDropdown onClose={() => setShowNotifications(false)} />
                 )}
-              </div>
+              </div> */}
               
               <button 
                 onClick={handleLogout} 
@@ -69,7 +69,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <ConnectionStatus />
+      {/* <ConnectionStatus /> */}
     </nav>
   );
 };
