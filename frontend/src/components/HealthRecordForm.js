@@ -66,8 +66,43 @@ const HealthRecordForm = ({ onRecordAdded, onCancel }) => {
         recordedAt: formData.recordedAt
       };
 
-      // Simulate API call with mock response
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const token = localStorage.getItem('token');
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://mern-final-project-735f.onrender.com';
+      
+      if (token) {
+        // Try to save to backend
+        try {
+          const response = await fetch(`${apiUrl}/api/health`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(recordData)
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            if (!result.isNormal) {
+              toast.warning('⚠️ This reading appears to be outside normal range. Consider consulting your healthcare provider.');
+            } else {
+              toast.success('✅ Health record saved successfully!');
+            }
+            onRecordAdded();
+            resetForm();
+            setLoading(false);
+            return;
+          } else if (response.status === 401) {
+            toast.warning('Session expired - record saved locally only');
+          }
+        } catch (apiError) {
+          console.error('API error:', apiError);
+          toast.info('Backend unavailable - simulating record');
+        }
+      }
+      
+      // Fallback to demo mode
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       // Mock health assessment logic
       let isNormal = true;
@@ -91,24 +126,26 @@ const HealthRecordForm = ({ onRecordAdded, onCancel }) => {
 
       console.log('Demo mode: Health record simulated:', recordData);
       onRecordAdded();
-      
-      // Reset form
-      setFormData({
-        type: 'blood_pressure',
-        systolic: '',
-        diastolic: '',
-        level: '',
-        unit: 'mmHg',
-        notes: '',
-        deviceUsed: 'Manual Entry',
-        recordedAt: new Date().toISOString().slice(0, 16)
-      });
+      resetForm();
     } catch (error) {
       console.error('Error adding health record:', error);
       toast.error('Failed to add health record');
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      type: 'blood_pressure',
+      systolic: '',
+      diastolic: '',
+      level: '',
+      unit: 'mmHg',
+      notes: '',
+      deviceUsed: 'Manual Entry',
+      recordedAt: new Date().toISOString().slice(0, 16)
+    });
   };
 
   return (

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate PWA Icons</title>
+</head>
+<body>
+    <h1>PWA Icon Generator</h1>
+    <p>Click the buttons below to generate and download app icons:</p>
+    <button onclick="generateIcon(192)">Generate 192x192 Icon</button>
+    <button onclick="generateIcon(512)">Generate 512x512 Icon</button>
+    
+    <script>
+        function generateIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#4f46e5');
+            gradient.addColorStop(1, '#7c3aed');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Add rounded corners effect
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.beginPath();
+            ctx.arc(size * 0.2, size * 0.2, size * 0.3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Medical cross symbol
+            ctx.fillStyle = 'white';
+            const crossSize = size * 0.5;
+            const crossThickness = size * 0.12;
+            const centerX = size / 2;
+            const centerY = size / 2;
+            
+            // Vertical bar
+            ctx.fillRect(
+                centerX - crossThickness / 2,
+                centerY - crossSize / 2,
+                crossThickness,
+                crossSize
+            );
+            
+            // Horizontal bar
+            ctx.fillRect(
+                centerX - crossSize / 2,
+                centerY - crossThickness / 2,
+                crossSize,
+                crossThickness
+            );
+            
+            // Add heart symbol
+            ctx.fillStyle = '#ff6b6b';
+            const heartSize = size * 0.15;
+            const heartX = size * 0.75;
+            const heartY = size * 0.25;
+            
+            ctx.font = `${heartSize}px Arial`;
+            ctx.fillText('❤️', heartX, heartY);
+            
+            // Convert to image and download
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = `logo${size}.png`;
+                link.href = url;
+                link.click();
+                URL.revokeObjectURL(url);
+            });
+        }
+    </script>
+</body>
+</html>

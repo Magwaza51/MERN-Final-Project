@@ -6,6 +6,8 @@ import HealthRecordForm from '../components/HealthRecordForm';
 import HealthMetricCard from '../components/HealthMetricCard';
 import HealthGoals from '../components/HealthGoals';
 import HealthTips from '../components/HealthTips';
+import { exportToCSV, exportToPDF } from '../utils/exportData';
+import { DashboardSkeleton } from '../components/LoadingSkeleton';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -19,8 +21,52 @@ const Dashboard = () => {
   const fetchHealthData = async () => {
     setLoading(true);
     try {
-      // Mock health records for demo
-      const mockRecords = [
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        console.log('Demo mode: No auth token found');
+        loadDemoData();
+        return;
+      }
+
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://mern-final-project-735f.onrender.com';
+      
+      try {
+        const response = await fetch(`${apiUrl}/api/health`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setHealthRecords(data.records || []);
+          setError('');
+          toast.success(`Loaded ${data.records?.length || 0} health records from database`);
+          console.log('Health data loaded from API');
+          return;
+        } else if (response.status === 401) {
+          console.log('Authentication failed, switching to demo mode');
+          toast.warning('Session expired - using demo mode');
+        }
+      } catch (apiError) {
+        console.error('API error:', apiError);
+        toast.info('Backend unavailable - using demo mode');
+      }
+      
+      loadDemoData();
+    } catch (error) {
+      console.error('Error fetching health data:', error);
+      setError('Failed to load health data');
+      toast.error('Failed to load health data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadDemoData = () => {
+    const mockRecords = [
         {
           _id: '1',
           type: 'blood_pressure',
@@ -132,20 +178,10 @@ const Dashboard = () => {
         }
       };
       
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
       setHealthRecords(mockRecords);
       setAnalytics(mockAnalytics);
-      setError('');
-      console.log('Running in demo mode - using mock health data');
-    } catch (error) {
-      console.error('Error fetching health data:', error);
-      setError('Failed to load health data');
-      toast.error('Failed to load health data');
-    } finally {
-      setLoading(false);
-    }
+      setError('Running in demo mode - using mock health data');
+      console.log('Demo mode: Mock user and health data loaded');
   };
 
   const handleRecordAdded = () => {
@@ -239,12 +275,7 @@ const Dashboard = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="card" style={{ textAlign: 'center' }}>
-        <h2>Loading your health dashboard...</h2>
-        <p>Please wait while we fetch your health data.</p>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   const tabs = [
@@ -273,6 +304,22 @@ const Dashboard = () => {
               className="btn btn-secondary"
             >
               🔄 Refresh
+            </button>
+            <button 
+              onClick={() => exportToCSV(healthRecords, `health-records-${new Date().toISOString().split('T')[0]}.csv`)}
+              className="btn btn-secondary"
+              disabled={healthRecords.length === 0}
+              title="Export data to CSV file"
+            >
+              📄 Export CSV
+            </button>
+            <button 
+              onClick={() => exportToPDF(healthRecords, user?.name || 'User')}
+              className="btn btn-secondary"
+              disabled={healthRecords.length === 0}
+              title="Generate printable PDF report"
+            >
+              🖨️ Print Report
             </button>
           </div>
         </div>

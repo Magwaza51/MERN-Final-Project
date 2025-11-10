@@ -1,0 +1,262 @@
+/* Mobile Responsiveness Improvements */
+
+/* Extra Small Devices (phones, less than 375px) */
+@media (max-width: 374px) {
+  .card {
+    padding: 12px !important;
+    margin: 8px !important;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  h3 {
+    font-size: 1.1rem !important;
+  }
+  
+  .btn {
+    font-size: 0.85rem !important;
+    padding: 8px 12px !important;
+  }
+  
+  /* Make tables scrollable */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  /* Stack buttons vertically on very small screens */
+  .btn-group,
+  div[style*="display: flex"] button {
+    width: 100% !important;
+    margin-bottom: 8px;
+  }
+}
+
+/* Small Devices (phones, 375px to 576px) */
+@media (max-width: 576px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .dashboard-actions {
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .dashboard-actions button {
+    flex: 1;
+    min-width: auto;
+  }
+  
+  /* Health metric cards - stack in single column */
+  .metrics-grid,
+  .quick-metrics {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  
+  .metric-card {
+    padding: 15px;
+  }
+  
+  /* Charts - reduce height for mobile */
+  .chart-container {
+    height: 250px !important;
+  }
+  
+  /* Form improvements */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Tab navigation */
+  .tab-navigation {
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+  }
+  
+  .tab-button {
+    white-space: nowrap;
+    padding: 10px 15px;
+  }
+}
+
+/* Medium Devices (tablets, 577px to 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Large Tablets (landscape mode) */
+@media (min-width: 769px) and (max-width: 992px) {
+  .metrics-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch targets */
+  button,
+  a,
+  .clickable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better spacing for touch */
+  .btn {
+    padding: 12px 20px;
+    margin: 5px;
+  }
+  
+  /* Disable hover effects on touch devices */
+  .btn:hover,
+  .card:hover {
+    transform: none !important;
+  }
+  
+  /* Better touch feedback */
+  button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Improve readability on small screens */
+@media (max-width: 576px) {
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  p {
+    margin-bottom: 12px;
+  }
+  
+  /* Reduce padding globally on mobile */
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Make modals full-screen on mobile */
+  .modal,
+  .dialog {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Landscape orientation on phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce header height */
+  .top-header,
+  .navbar {
+    height: 50px !important;
+    padding: 5px 15px !important;
+  }
+  
+  /* Compact spacing */
+  .card {
+    margin: 10px 0 !important;
+    padding: 15px !important;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Improve chart responsiveness */
+@media (max-width: 768px) {
+  .recharts-wrapper {
+    margin: 0 auto;
+  }
+  
+  .recharts-surface {
+    width: 100% !important;
+  }
+  
+  /* Smaller font in charts */
+  .recharts-text {
+    font-size: 11px !important;
+  }
+}
+
+/* Sidebar improvements for mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px !important;
+  }
+  
+  .sidebar-overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+/* Accessibility improvements for mobile */
+@media (max-width: 576px) {
+  /* Ensure sufficient color contrast */
+  .text-muted {
+    color: #555 !important;
+  }
+  
+  /* Larger focus indicators for keyboard navigation */
+  *:focus {
+    outline: 3px solid #4f46e5 !important;
+    outline-offset: 2px !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  /* Hide navigation and non-essential elements */
+  .navbar,
+  .sidebar,
+  .btn,
+  button,
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Optimize layout for printing */
+  .card {
+    page-break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  
+  /* Ensure dark text on white background */
+  * {
+    background: white !important;
+    color: black !important;
+  }
+  
+  /* Show URLs for links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+}

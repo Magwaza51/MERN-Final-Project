@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './styles/responsive.css';
 import { AuthProvider } from './context/AuthContext';
 // import { SocketProvider } from './context/SocketContext';
 // import { NotificationProvider } from './context/NotificationContext';
