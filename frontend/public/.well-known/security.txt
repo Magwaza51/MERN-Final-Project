@@ -1,0 +1,20 @@
+# HealthConnect Security Contact Information
+# https://securitytxt.org/
+
+Contact: mailto:security@healthconnect.com
+Contact: https://healthconnect.com/security
+Expires: 2026-10-25T00:00:00.000Z
+Encryption: https://healthconnect.com/pgp-key.asc
+Acknowledgments: https://healthconnect.com/security-acknowledgments
+Preferred-Languages: en
+Canonical: https://healthconnect.com/.well-known/security.txt
+
+# Policy
+Policy: https://healthconnect.com/security-policy
+
+# Hiring
+Hiring: https://healthconnect.com/careers
+
+# Additional Information
+# HealthConnect takes security seriously and appreciates responsible disclosure
+# of security vulnerabilities. Please review our security policy before reporting.

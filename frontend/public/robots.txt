@@ -1,0 +1,26 @@
+# HealthConnect - Robots.txt
+# Allow search engines to index the site
+
+User-agent: *
+Allow: /
+
+# Disallow sensitive areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json
+Disallow: /socket.io/
+
+# Allow important pages for SEO
+Allow: /
+Allow: /login
+Allow: /register
+Allow: /doctors
+Allow: /about
+Allow: /contact
+
+# Sitemap location
+Sitemap: https://healthconnect.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1

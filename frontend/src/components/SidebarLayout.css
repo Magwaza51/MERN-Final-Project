@@ -1,0 +1,210 @@
+/* Simple, clean sidebar layout */
+.sidebar-layout {
+  display: flex;
+  min-height: 100vh;
+  gap: 0; /* Remove any gap between sidebar and content */
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background: #1a69aa; /* Rolled back to original dark gray */
+  color: rgb(18, 16, 16); /* Rolled back to white text */
+  padding: 0;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.sidebar.sidebar-open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #4a5568; /* Rolled back to original gray */
+  text-align: center;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #ffffff; /* Rolled back to white */
+}
+
+.sidebar-nav {
+  padding: 20px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #e2e8f0; /* Rolled back to light gray */
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: #4a5568; /* Rolled back to original gray hover */
+  color: #ffffff; /* White text on hover */
+}
+
+.nav-item.emergency {
+  background-color: #e53e3e;
+}
+
+.nav-item.emergency:hover {
+  background-color: #c53030;
+}
+
+.nav-icon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  border-top: 1px solid #4a5568; /* Rolled back to original gray */
+}
+
+.user-info {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #a0aec0; /* Rolled back to light gray */
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 10px;
+  background: #e53e3e;
+  color: white; /* Keep logout button text white for visibility */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #c53030;
+}
+
+/* Mobile Overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  margin-left: 0;
+  background: #f7fafc;
+  border: none; /* Remove any borders */
+  padding: 0; /* Remove default padding */
+}
+
+.top-header {
+  background: #4299e1; /* Fixed header background */
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky; /* Make header sticky */
+  top: 0;
+  z-index: 100;
+}
+
+.mobile-menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.mobile-menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.welcome-text {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.content-area {
+  padding: 15px;
+  min-height: calc(100vh - 70px);
+  overflow-y: auto; /* Allow content area to scroll */
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .sidebar {
+    position: fixed; /* Keep sidebar fixed in place */
+    transform: translateX(0);
+    flex-shrink: 0;
+    height: 100vh; /* Full height */
+    overflow-y: auto; /* Allow sidebar to scroll if content is too long */
+  }
+  
+  .main-content {
+    margin-left: 250px; /* Add space for fixed sidebar */
+    flex: 1;
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Allow content to scroll */
+  }
+  
+  .mobile-menu-btn {
+    display: none;
+  }
+  
+  .sidebar-overlay {
+    display: none;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .sidebar {
+    position: fixed;
+  }
+  
+  .mobile-menu-btn {
+    display: block;
+  }
+}

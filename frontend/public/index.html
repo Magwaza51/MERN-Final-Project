@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Viewport and Mobile Optimization -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="msapplication-navbutton-color" content="#4f46e5" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#4f46e5" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="HealthConnect: Smart Healthcare & Appointment Platform - Book doctors, manage health records, track vital signs, and access telemedicine services. Supporting UN SDG 3 for Good Health and Well-Being." />
+    <meta name="keywords" content="healthcare, telemedicine, doctor appointment, health records, medical platform, health tracking, wellness, SDG 3, digital health" />
+    <meta name="author" content="HealthConnect Team" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="HealthConnect - Smart Healthcare Platform" />
+    <meta property="og:description" content="Comprehensive healthcare platform for booking appointments, managing health records, and accessing telemedicine services." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://healthconnect.com" />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+    <meta property="og:site_name" content="HealthConnect" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HealthConnect - Smart Healthcare Platform" />
+    <meta name="twitter:description" content="Book doctors, manage health records, and access telemedicine services." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/twitter-image.png" />
+    
+    <!-- Performance and Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' ws: wss: https: http: localhost:*;" />
+    
+    <!-- Preconnect to External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.openstreetmap.org" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Loading Styles -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/loading.css" />
+    
+    <!-- Structured Data for Healthcare -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalOrganization",
+      "name": "HealthConnect",
+      "description": "Smart Healthcare & Appointment Platform",
+      "url": "https://healthconnect.com",
+      "logo": "%PUBLIC_URL%/logo512.png",
+      "sameAs": [
+        "https://facebook.com/healthconnect",
+        "https://twitter.com/healthconnect",
+        "https://linkedin.com/company/healthconnect"
+      ],
+      "medicalSpecialty": [
+        "General Practice",
+        "Cardiology",
+        "Dermatology",
+        "Pediatrics",
+        "Telemedicine"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Healthcare Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalProcedure",
+              "name": "Doctor Consultation"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "MedicalTest",
+              "name": "Health Monitoring"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+    
+    <!-- Page Title -->
+    <title>HealthConnect - Smart Healthcare Platform | Book Doctors, Manage Health Records</title>
+  </head>
+  <body>
+    <!-- Fallback for users without JavaScript -->
+    <noscript>
+      <div class="noscript-container">
+        <div class="noscript-card">
+          <h1 class="noscript-title">🏥 HealthConnect</h1>
+          <h2 class="noscript-subtitle">JavaScript Required</h2>
+          <p class="noscript-description">
+            HealthConnect requires JavaScript to provide you with the best healthcare experience. 
+            Please enable JavaScript in your browser to access our platform.
+          </p>
+          <div class="noscript-features">
+            <h3>Our Features:</h3>
+            <ul>
+              <li>📅 Book doctor appointments</li>
+              <li>📊 Track health records</li>
+              <li>🏥 Find nearby healthcare providers</li>
+              <li>💬 Telemedicine consultations</li>
+              <li>🔔 Real-time health notifications</li>
+            </ul>
+          </div>
+          <p class="noscript-footer">
+            Supporting UN Sustainable Development Goal 3: Good Health and Well-Being
+          </p>
+        </div>
+      </div>
+    </noscript>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <h1 class="loading-title">🏥 HealthConnect</h1>
+        <p class="loading-text">Loading your healthcare platform...</p>
+      </div>
+    </div>
+    
+    <!-- Main Application Container -->
+    <div id="root"></div>
+    
+    <!-- Remove loading screen when React app loads -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        // Hide loading screen after a delay or when React renders
+        setTimeout(function() {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.classList.add('loading-fade-out');
+            setTimeout(function() {
+              loadingScreen.remove();
+            }, 500);
+          }
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

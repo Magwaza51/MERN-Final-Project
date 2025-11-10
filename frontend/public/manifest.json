@@ -1,0 +1,22 @@
+{
+  "short_name": "HealthConnect",
+  "name": "HealthConnect - Smart Healthcare Platform",
+  "description": "Comprehensive healthcare platform for booking appointments, managing health records, and accessing telemedicine services.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#4f46e5",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["health", "medical", "healthcare", "appointment"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
