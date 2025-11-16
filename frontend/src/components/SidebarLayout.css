@@ -16,7 +16,7 @@
   left: 0;
   top: 0;
   z-index: 1000;
-  transform: translateX(-100%);
+  transform: translateX(-100%); /* Hidden by default on mobile */
   transition: transform 0.3s ease;
   overflow-y: auto;
 }
@@ -172,7 +172,7 @@
 @media (min-width: 769px) {
   .sidebar {
     position: fixed; /* Keep sidebar fixed in place */
-    transform: translateX(0);
+    transform: translateX(0) !important; /* Always show sidebar on desktop - override mobile hide */
     flex-shrink: 0;
     height: 100vh; /* Full height */
     overflow-y: auto; /* Allow sidebar to scroll if content is too long */
