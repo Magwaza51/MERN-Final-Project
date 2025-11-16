@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Favicon</title>
+</head>
+<body>
+    <h1>HealthConnect Favicon Generator</h1>
+    <canvas id="canvas" width="512" height="512"></canvas>
+    <br><br>
+    <button onclick="downloadFavicon(32)">Download favicon.ico (32x32)</button>
+    <button onclick="downloadFavicon(192)">Download logo192.png</button>
+    <button onclick="downloadFavicon(512)">Download logo512.png</button>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+        gradient.addColorStop(0, '#667eea');
+        gradient.addColorStop(1, '#764ba2');
+        
+        // Fill background
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 512, 512);
+
+        // Draw white medical cross/health icon
+        ctx.fillStyle = 'white';
+        
+        // Draw heart shape
+        ctx.beginPath();
+        const centerX = 256;
+        const centerY = 220;
+        const width = 200;
+        const height = 180;
+        
+        ctx.moveTo(centerX, centerY + height/4);
+        ctx.bezierCurveTo(centerX, centerY, centerX - width/2, centerY - height/4, centerX - width/2, centerY + height/4);
+        ctx.bezierCurveTo(centerX - width/2, centerY + height/2, centerX, centerY + height/1.2, centerX, centerY + height);
+        ctx.bezierCurveTo(centerX, centerY + height/1.2, centerX + width/2, centerY + height/2, centerX + width/2, centerY + height/4);
+        ctx.bezierCurveTo(centerX + width/2, centerY - height/4, centerX, centerY, centerX, centerY + height/4);
+        ctx.fill();
+
+        // Add plus sign inside
+        ctx.fillStyle = '#667eea';
+        const plusSize = 60;
+        const plusThick = 20;
+        // Horizontal bar
+        ctx.fillRect(centerX - plusSize/2, centerY + 20, plusSize, plusThick);
+        // Vertical bar
+        ctx.fillRect(centerX - plusThick/2, centerY + 20 - plusSize/2 + plusThick/2, plusThick, plusSize);
+
+        function downloadFavicon(size) {
+            // Create temporary canvas at desired size
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = size;
+            tempCanvas.height = size;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Draw scaled version
+            tempCtx.drawImage(canvas, 0, 0, size, size);
+            
+            // Download
+            const link = document.createElement('a');
+            if (size === 32) {
+                link.download = 'favicon.ico';
+            } else {
+                link.download = `logo${size}.png`;
+            }
+            link.href = tempCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+        console.log('Favicon generator ready! Click the buttons to download.');
+    </script>
+</body>
+</html>
