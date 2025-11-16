@@ -31,38 +31,53 @@ const AppointmentsList = () => {
       const mockAppointments = [
         {
           _id: 'appt-1',
-          doctorName: 'Dr. Sarah Johnson',
-          specialty: 'Cardiologist',
-          date: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-          time: '10:30',
+          doctorId: {
+            userId: { name: 'Sarah Johnson' },
+            specialization: 'Cardiologist'
+          },
+          appointmentDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+          timeSlot: { startTime: '10:30', endTime: '11:00' },
+          type: 'in-person',
+          reason: 'Regular checkup',
+          symptoms: ['Chest pain', 'Shortness of breath'],
           status: 'confirmed',
-          type: 'consultation'
+          consultationFee: 150
         },
         {
           _id: 'appt-2',
-          doctorName: 'Dr. Michael Chen',
-          specialty: 'Neurologist',
-          date: new Date(Date.now() + 172800000).toISOString().split('T')[0],
-          time: '14:00',
+          doctorId: {
+            userId: { name: 'Michael Chen' },
+            specialization: 'Neurologist'
+          },
+          appointmentDate: new Date(Date.now() + 172800000).toISOString().split('T')[0],
+          timeSlot: { startTime: '14:00', endTime: '14:30' },
+          type: 'online',
+          reason: 'Follow-up consultation',
+          symptoms: ['Headache', 'Dizziness'],
           status: 'pending',
-          type: 'follow-up'
+          consultationFee: 180
         },
         {
           _id: 'appt-3',
-          doctorName: 'Dr. Emily Davis',
-          specialty: 'Dermatologist',
-          date: new Date(Date.now() + 259200000).toISOString().split('T')[0],
-          time: '09:00',
+          doctorId: {
+            userId: { name: 'Emily Davis' },
+            specialization: 'Dermatologist'
+          },
+          appointmentDate: new Date(Date.now() + 259200000).toISOString().split('T')[0],
+          timeSlot: { startTime: '09:00', endTime: '09:30' },
+          type: 'in-person',
+          reason: 'Skin examination',
+          symptoms: ['Rash', 'Itching'],
           status: 'confirmed',
-          type: 'check-up'
+          consultationFee: 120
         }
       ];
       
       setAppointments(mockAppointments);
       setPagination({
-        currentPage: 1,
-        totalPages: 1,
-        totalAppointments: mockAppointments.length
+        current: 1,
+        pages: 1,
+        total: mockAppointments.length
       });
       console.log('Demo mode: Mock appointments loaded');
     } catch (error) {
