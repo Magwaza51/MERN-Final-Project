@@ -1,0 +1,408 @@
+.doctors-page-new {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.search-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.search-header h1 {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+.search-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.search-controls {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 15px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.location-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.location-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+}
+
+.filters {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.filter-group select {
+  padding: 10px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: white;
+  min-width: 150px;
+}
+
+.radius-slider {
+  width: 200px;
+  height: 6px;
+  border-radius: 5px;
+  background: #e2e8f0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.radius-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4f46e5;
+  cursor: pointer;
+}
+
+.radius-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4f46e5;
+  cursor: pointer;
+  border: none;
+}
+
+.results-count {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #f0f4ff;
+  border-radius: 8px;
+  color: #4f46e5;
+  font-weight: 600;
+  text-align: center;
+}
+
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 25px;
+}
+
+.facility-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.facility-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.facility-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.facility-icon {
+  font-size: 3rem;
+}
+
+.facility-title {
+  flex: 1;
+}
+
+.facility-title h3 {
+  margin: 0 0 5px 0;
+  color: #2d3748;
+  font-size: 1.3rem;
+}
+
+.facility-type {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.facility-rating {
+  background: #ffd700;
+  color: #2d3748;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.facility-info {
+  margin-bottom: 20px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #2d3748;
+  font-weight: 600;
+  text-align: right;
+}
+
+.distance-item {
+  border: none;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.distance-badge {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.fee-item {
+  border: none;
+  justify-content: center;
+}
+
+.fee-badge {
+  background: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.services {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.services strong {
+  display: block;
+  margin-bottom: 10px;
+  color: #2d3748;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.service-tag {
+  background: #e7f3ff;
+  color: #0066cc;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.languages {
+  margin-top: 10px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.facility-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  min-width: 120px;
+}
+
+.directions-btn {
+  background: #4f46e5;
+  color: white;
+}
+
+.directions-btn:hover {
+  background: #3730a3;
+  transform: translateY(-2px);
+}
+
+.call-btn {
+  background: #10b981;
+  color: white;
+}
+
+.call-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+.book-btn {
+  background: #f59e0b;
+  color: white;
+}
+
+.book-btn:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 15px;
+}
+
+.no-results h3 {
+  color: #2d3748;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.no-results p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-header h1 {
+    font-size: 2rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .location-btn {
+    width: 100%;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .filter-group select,
+  .radius-slider {
+    width: 100%;
+  }
+
+  .facilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .facility-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .doctors-page-new {
+    padding: 15px;
+  }
+
+  .search-controls {
+    padding: 15px;
+  }
+
+  .facility-card {
+    padding: 15px;
+  }
+
+  .facility-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .info-value {
+    text-align: left;
+  }
+}
