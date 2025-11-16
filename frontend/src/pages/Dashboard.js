@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import HealthDashboard from '../components/HealthDashboard';
 import HealthRecordForm from '../components/HealthRecordForm';
@@ -11,6 +12,7 @@ import { DashboardSkeleton } from '../components/LoadingSkeleton';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [healthRecords, setHealthRecords] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -24,165 +26,43 @@ const Dashboard = () => {
       const token = localStorage.getItem('token');
       
       if (!token) {
-        console.log('Demo mode: No auth token found');
-        loadDemoData();
+        setError('Please log in to view your health data');
+        toast.error('Authentication required');
+        navigate('/login');
         return;
       }
 
       const apiUrl = process.env.REACT_APP_API_URL || 'https://mern-final-project-735f.onrender.com';
       
-      try {
-        const response = await fetch(`${apiUrl}/api/health`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setHealthRecords(data.records || []);
-          setError('');
-          toast.success(`Loaded ${data.records?.length || 0} health records from database`);
-          console.log('Health data loaded from API');
-          return;
-        } else if (response.status === 401) {
-          console.log('Authentication failed, switching to demo mode');
-          toast.warning('Session expired - using demo mode');
+      const response = await fetch(`${apiUrl}/api/health`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
-      } catch (apiError) {
-        console.error('API error:', apiError);
-        toast.info('Backend unavailable - using demo mode');
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setHealthRecords(data.records || []);
+        setError('');
+        toast.success(`Loaded ${data.records?.length || 0} health records`);
+      } else if (response.status === 401) {
+        setError('Session expired. Please log in again.');
+        toast.error('Session expired');
+        localStorage.removeItem('token');
+        navigate('/login');
+      } else {
+        throw new Error('Failed to fetch health data');
       }
-      
-      loadDemoData();
     } catch (error) {
       console.error('Error fetching health data:', error);
-      setError('Failed to load health data');
+      setError('Unable to connect to server. Please check your connection.');
       toast.error('Failed to load health data');
     } finally {
       setLoading(false);
     }
   };
 
-  const loadDemoData = () => {
-    const mockRecords = [
-        {
-          _id: '1',
-          type: 'blood_pressure',
-          value: { systolic: 120, diastolic: 80, unit: 'mmHg' },
-          recordedAt: new Date().toISOString(),
-          isNormal: true,
-          notes: 'Normal reading'
-        },
-        {
-          _id: '2',
-          type: 'heart_rate',
-          value: { level: 75, unit: 'bpm' },
-          recordedAt: new Date(Date.now() - 86400000).toISOString(),
-          isNormal: true,
-          notes: 'Resting heart rate'
-        },
-        {
-          _id: '3',
-          type: 'blood_sugar',
-          value: { level: 95, unit: 'mg/dL' },
-          recordedAt: new Date(Date.now() - 172800000).toISOString(),
-          isNormal: true,
-          notes: 'Fasting glucose'
-        },
-        {
-          _id: '4',
-          type: 'weight',
-          value: { level: 70, unit: 'kg' },
-          recordedAt: new Date(Date.now() - 259200000).toISOString(),
-          isNormal: true,
-          notes: 'Weekly weigh-in'
-        },
-        {
-          _id: '5',
-          type: 'temperature',
-          value: { level: 36.8, unit: '°C' },
-          recordedAt: new Date(Date.now() - 345600000).toISOString(),
-          isNormal: true,
-          notes: 'Normal body temperature'
-        },
-        {
-          _id: '6',
-          type: 'oxygen_saturation',
-          value: { level: 98, unit: '%' },
-          recordedAt: new Date(Date.now() - 432000000).toISOString(),
-          isNormal: true,
-          notes: 'Excellent oxygen levels'
-        },
-        // Additional historical data for better charts
-        {
-          _id: '7',
-          type: 'blood_pressure',
-          value: { systolic: 118, diastolic: 78, unit: 'mmHg' },
-          recordedAt: new Date(Date.now() - 518400000).toISOString(),
-          isNormal: true,
-          notes: 'Good reading'
-        },
-        {
-          _id: '8',
-          type: 'heart_rate',
-          value: { level: 72, unit: 'bpm' },
-          recordedAt: new Date(Date.now() - 604800000).toISOString(),
-          isNormal: true,
-          notes: 'Resting rate'
-        },
-        {
-          _id: '9',
-          type: 'blood_sugar',
-          value: { level: 88, unit: 'mg/dL' },
-          recordedAt: new Date(Date.now() - 691200000).toISOString(),
-          isNormal: true,
-          notes: 'Excellent fasting glucose'
-        },
-        {
-          _id: '10',
-          type: 'weight',
-          value: { level: 70.5, unit: 'kg' },
-          recordedAt: new Date(Date.now() - 777600000).toISOString(),
-          isNormal: true,
-          notes: 'Weight maintenance'
-        }
-      ];
-
-      // Mock analytics data
-      const mockAnalytics = {
-        blood_pressure: {
-          normalCount: mockRecords.filter(r => r.type === 'blood_pressure' && r.isNormal).length,
-          abnormalCount: mockRecords.filter(r => r.type === 'blood_pressure' && !r.isNormal).length
-        },
-        heart_rate: {
-          normalCount: mockRecords.filter(r => r.type === 'heart_rate' && r.isNormal).length,
-          abnormalCount: mockRecords.filter(r => r.type === 'heart_rate' && !r.isNormal).length
-        },
-        blood_sugar: {
-          normalCount: mockRecords.filter(r => r.type === 'blood_sugar' && r.isNormal).length,
-          abnormalCount: mockRecords.filter(r => r.type === 'blood_sugar' && !r.isNormal).length
-        },
-        weight: {
-          normalCount: mockRecords.filter(r => r.type === 'weight' && r.isNormal).length,
-          abnormalCount: mockRecords.filter(r => r.type === 'weight' && !r.isNormal).length
-        },
-        temperature: {
-          normalCount: mockRecords.filter(r => r.type === 'temperature' && r.isNormal).length,
-          abnormalCount: mockRecords.filter(r => r.type === 'temperature' && !r.isNormal).length
-        },
-        oxygen_saturation: {
-          normalCount: mockRecords.filter(r => r.type === 'oxygen_saturation' && r.isNormal).length,
-          abnormalCount: mockRecords.filter(r => r.type === 'oxygen_saturation' && !r.isNormal).length
-        }
-      };
-      
-      setHealthRecords(mockRecords);
-      setAnalytics(mockAnalytics);
-      setError('Running in demo mode - using mock health data');
-      console.log('Demo mode: Mock user and health data loaded');
-  };
 
   const handleRecordAdded = () => {
     setShowAddForm(false);

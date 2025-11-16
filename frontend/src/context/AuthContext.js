@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
+import api from '../services/api';
 
 const AuthContext = createContext();
 
@@ -79,26 +80,18 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       setAuthToken(token);
       try {
-        // Demo mode: Create mock user instead of API call
-        const mockUser = {
-          _id: 'demo-user-123',
-          name: 'Demo User',
-          email: 'demo@healthconnect.com',
-          createdAt: new Date().toISOString()
-        };
-        
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Get current user data from backend
+        const response = await api.get('/api/users/profile');
         
         dispatch({
           type: 'USER_LOADED',
-          payload: { user: mockUser }
+          payload: { user: response.data.user }
         });
-        console.log('Demo mode: Mock user loaded');
       } catch (error) {
+        localStorage.removeItem('token');
         dispatch({
           type: 'AUTH_ERROR',
-          payload: error.message || 'Authentication failed'
+          payload: error.response?.data?.message || 'Authentication failed'
         });
       }
     } else {
@@ -110,31 +103,24 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     dispatch({ type: 'LOADING' });
     try {
-      // Demo mode: Simulate registration
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockResponse = {
-        user: {
-          _id: 'demo-user-' + Date.now(),
-          name: userData.name,
-          email: userData.email,
-          createdAt: new Date().toISOString()
-        },
-        token: 'demo-token-' + Date.now()
-      };
+      const response = await api.post('/api/auth/register', userData);
       
       dispatch({
         type: 'REGISTER_SUCCESS',
-        payload: mockResponse
+        payload: response.data
       });
-      console.log('Demo mode: Registration simulated for', userData.email);
+      
       return { success: true };
     } catch (error) {
-      const message = 'Registration failed';
+      const message = error.response?.data?.message || 
+                     error.response?.data?.errors?.[0]?.msg ||
+                     'Registration failed. Please try again.';
+      
       dispatch({
         type: 'REGISTER_FAIL',
         payload: message
       });
+      
       return { success: false, error: message };
     }
   };
@@ -143,31 +129,27 @@ export const AuthProvider = ({ children }) => {
   const login = async (userData) => {
     dispatch({ type: 'LOADING' });
     try {
-      // Demo mode: Simulate login
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockResponse = {
-        user: {
-          _id: 'demo-user-' + Date.now(),
-          name: userData.email.split('@')[0], // Use email prefix as name
-          email: userData.email,
-          createdAt: new Date().toISOString()
-        },
-        token: 'demo-token-' + Date.now()
-      };
+      const response = await api.post('/api/auth/login', {
+        email: userData.email,
+        password: userData.password
+      });
       
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: mockResponse
+        payload: response.data
       });
-      console.log('Demo mode: Login simulated for', userData.email);
+      
       return { success: true };
     } catch (error) {
-      const message = 'Login failed';
+      const message = error.response?.data?.message || 
+                     error.response?.data?.errors?.[0]?.msg ||
+                     'Invalid email or password. Please try again.';
+      
       dispatch({
         type: 'LOGIN_FAIL',
         payload: message
       });
+      
       return { success: false, error: message };
     }
   };

@@ -69,67 +69,40 @@ const HealthRecordForm = ({ onRecordAdded, onCancel }) => {
       const token = localStorage.getItem('token');
       const apiUrl = process.env.REACT_APP_API_URL || 'https://mern-final-project-735f.onrender.com';
       
-      if (token) {
-        // Try to save to backend
-        try {
-          const response = await fetch(`${apiUrl}/api/health`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(recordData)
-          });
+      if (!token) {
+        toast.error('Please log in to add health records');
+        setLoading(false);
+        return;
+      }
 
-          if (response.ok) {
-            const result = await response.json();
-            if (!result.isNormal) {
-              toast.warning('⚠️ This reading appears to be outside normal range. Consider consulting your healthcare provider.');
-            } else {
-              toast.success('✅ Health record saved successfully!');
-            }
-            onRecordAdded();
-            resetForm();
-            setLoading(false);
-            return;
-          } else if (response.status === 401) {
-            toast.warning('Session expired - record saved locally only');
-          }
-        } catch (apiError) {
-          console.error('API error:', apiError);
-          toast.info('Backend unavailable - simulating record');
+      // Save to backend
+      const response = await fetch(`${apiUrl}/api/health`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(recordData)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (!result.isNormal) {
+          toast.warning('⚠️ This reading appears to be outside normal range. Consider consulting your healthcare provider.');
+        } else {
+          toast.success('✅ Health record saved successfully!');
         }
-      }
-      
-      // Fallback to demo mode
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Mock health assessment logic
-      let isNormal = true;
-      if (formData.type === 'blood_pressure') {
-        const systolic = parseInt(formData.systolic);
-        const diastolic = parseInt(formData.diastolic);
-        isNormal = systolic >= 90 && systolic <= 140 && diastolic >= 60 && diastolic <= 90;
-      } else if (formData.type === 'blood_sugar') {
-        const level = parseFloat(formData.level);
-        isNormal = level >= 70 && level <= 140;
-      } else if (formData.type === 'heart_rate') {
-        const level = parseFloat(formData.level);
-        isNormal = level >= 60 && level <= 100;
-      }
-      
-      if (!isNormal) {
-        toast.warning('⚠️ This reading appears to be outside normal range. Consider consulting your healthcare provider.');
+        onRecordAdded();
+        resetForm();
+      } else if (response.status === 401) {
+        toast.error('Session expired. Please log in again.');
+        localStorage.removeItem('token');
       } else {
-        toast.success('Health record added successfully! (Demo Mode)');
+        throw new Error('Failed to save health record');
       }
-
-      console.log('Demo mode: Health record simulated:', recordData);
-      onRecordAdded();
-      resetForm();
     } catch (error) {
       console.error('Error adding health record:', error);
-      toast.error('Failed to add health record');
+      toast.error('Failed to add health record. Please check your connection.');
     } finally {
       setLoading(false);
     }
