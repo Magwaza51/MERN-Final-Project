@@ -100,12 +100,13 @@
   border-radius: 5px;
   background: #e2e8f0;
   outline: none;
+  appearance: none;
   -webkit-appearance: none;
 }
 
 .radius-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
   appearance: none;
+  -webkit-appearance: none;
   width: 20px;
   height: 20px;
   border-radius: 50%;

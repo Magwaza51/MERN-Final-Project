@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import './Doctors.css';
-import './Doctors.css';
 
 const Doctors = () => {
   const [userLocation, setUserLocation] = useState(null);
