@@ -332,12 +332,13 @@ const ProductionHome = () => {
       <style>{`
         .production-home {
           min-height: 100vh;
+          padding-top: 70px; /* Add padding to prevent navbar overlap */
         }
 
         .hero {
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
-          padding: 100px 0;
+          padding: 80px 0 100px 0; /* Adjusted top padding */
           position: relative;
           overflow: hidden;
         }
@@ -830,31 +831,104 @@ const ProductionHome = () => {
         }
 
         @media (max-width: 768px) {
+          .production-home {
+            padding-top: 60px; /* Adjust for smaller navbar on mobile */
+          }
+
+          .hero {
+            padding: 60px 0 80px 0;
+          }
+
           .hero-content {
             grid-template-columns: 1fr;
             text-align: center;
+            gap: 40px;
           }
 
           .hero-text h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
+          }
+
+          .hero-text p {
+            font-size: 1.1rem;
           }
 
           .hero-stats {
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+          }
+
+          .stat-number {
+            font-size: 2rem;
+          }
+
+          .hero-actions {
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .hero-btn {
+            width: 100%;
+            max-width: 300px;
+          }
+
+          .floating-card {
+            max-width: 100%;
           }
 
           .emergency-content {
             grid-template-columns: 1fr;
             text-align: center;
+            gap: 40px;
+          }
+
+          .emergency-text h2 {
+            font-size: 2rem;
           }
 
           .features-grid {
             grid-template-columns: 1fr;
           }
 
+          .section-header h2 {
+            font-size: 2rem;
+          }
+
+          .section-header p {
+            font-size: 1.1rem;
+          }
+
+          .cta-content h2 {
+            font-size: 2rem;
+          }
+
           .cta-actions {
             flex-direction: column;
             align-items: center;
+          }
+
+          .cta-btn {
+            width: 100%;
+            max-width: 300px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-text h1 {
+            font-size: 1.8rem;
+          }
+
+          .stat-number {
+            font-size: 1.5rem;
+          }
+
+          .feature-card {
+            padding: 30px 20px;
+          }
+
+          .feature-icon {
+            font-size: 3rem;
           }
         }
       `}</style>
