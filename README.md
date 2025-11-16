@@ -3,8 +3,9 @@
 ## 🏥 Overview
 HealthConnect is a comprehensive MERN stack healthcare platform supporting UN Sustainable Development Goal 3: Good Health and Well-Being. It provides a complete solution for health tracking, doctor appointments, and telemedicine services.
 
-**Live Application:** https://mern-final-project-git-main-mlungisi-magwazas-projects.vercel.app  
-**Backend API:** https://mern-final-project-735f.onrender.com  
+**🌐 Live Application:** https://mern-final-project-git-main-mlungisi-magwazas-projects.vercel.app  
+**📊 Dashboard:** https://mern-final-project-git-main-mlungisi-magwazas-projects.vercel.app/dashboard  
+**🔧 Backend API:** https://mern-final-project-735f.onrender.com  
 **Status:** ✅ Production Ready | **Grade:** A+ (9.5/10)
 
 ---
