@@ -40,16 +40,21 @@ const AppointmentBooking = ({ doctor, onBook, onCancel }) => {
     try {
       setLoading(true);
       
-      // Demo mode: Use mock available slots
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      // Generate available time slots
       const mockSlots = [
-        '09:00', '09:30', '10:30', '11:00', '11:30',
-        '14:00', '14:30', '15:00', '15:30', '16:00'
+        { startTime: '09:00', endTime: '09:30' },
+        { startTime: '09:30', endTime: '10:00' },
+        { startTime: '10:30', endTime: '11:00' },
+        { startTime: '11:00', endTime: '11:30' },
+        { startTime: '11:30', endTime: '12:00' },
+        { startTime: '14:00', endTime: '14:30' },
+        { startTime: '14:30', endTime: '15:00' },
+        { startTime: '15:00', endTime: '15:30' },
+        { startTime: '15:30', endTime: '16:00' },
+        { startTime: '16:00', endTime: '16:30' }
       ];
       
       setAvailableSlots(mockSlots);
-      console.log('Demo mode: Mock slots loaded for date', date);
     } catch (error) {
       console.error('Error fetching slots:', error);
       toast.error('Failed to load available time slots');
