@@ -16,6 +16,8 @@ import Dashboard from './pages/Dashboard';
 import Doctors from './pages/Doctors';
 import Appointments from './pages/Appointments';
 import DoctorProfile from './pages/DoctorProfile';
+import MedicationTracker from './pages/MedicationTracker';
+import WellnessTracker from './pages/WellnessTracker';
 import AnalyticsDashboard from './components/AnalyticsDashboard';
 import SocketDemo from './components/SocketDemo';
 import MedicalRecords from './components/MedicalRecords';
@@ -78,6 +80,26 @@ function App() {
                     <PrivateRoute>
                       <SidebarLayout title="My Appointments">
                         <Appointments />
+                      </SidebarLayout>
+                    </PrivateRoute>
+                  } 
+                />
+                <Route 
+                  path="/medications" 
+                  element={
+                    <PrivateRoute>
+                      <SidebarLayout title="💊 Medication Tracker">
+                        <MedicationTracker />
+                      </SidebarLayout>
+                    </PrivateRoute>
+                  } 
+                />
+                <Route 
+                  path="/wellness" 
+                  element={
+                    <PrivateRoute>
+                      <SidebarLayout title="🌟 Wellness Tracker">
+                        <WellnessTracker />
                       </SidebarLayout>
                     </PrivateRoute>
                   } 

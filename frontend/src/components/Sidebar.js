@@ -31,31 +31,36 @@ const Sidebar = ({ isCollapsed, setIsCollapsed, currentPage, onPageChange, isMob
       title: 'Health Dashboard',
       items: [
         { icon: '📊', label: 'Overview', path: '/dashboard', key: 'dashboard' },
-        { icon: '�', label: 'Health Metrics', path: '/health-metrics', key: 'metrics' },
-        { icon: '�', label: 'Analytics', path: '/analytics', key: 'analytics' }
+        { icon: '📈', label: 'Analytics', path: '/analytics', key: 'analytics' }
+      ]
+    },
+    {
+      title: 'Health Tracking',
+      items: [
+        { icon: '💊', label: 'Medications', path: '/medications', key: 'medications' },
+        { icon: '🌟', label: 'Wellness', path: '/wellness', key: 'wellness' },
+        { icon: '📋', label: 'Medical Records', path: '/medical-records', key: 'records' }
       ]
     },
     {
       title: 'Medical Services',
       items: [
         { icon: '👨‍⚕️', label: 'Find Doctors', path: '/doctors', key: 'doctors' },
-        { icon: '�', label: 'Appointments', path: '/appointments', key: 'appointments' },
-        { icon: '�', label: 'Medical Records', path: '/medical-records', key: 'records' },
+        { icon: '📅', label: 'Appointments', path: '/appointments', key: 'appointments' },
         { icon: '🤖', label: 'AI Assistant', path: '/ai-assistant', key: 'ai' }
       ]
     },
     {
       title: 'Telemedicine',
       items: [
-        { icon: '�', label: 'Video Consultation', path: '/telemedicine', key: 'telemedicine' },
-        { icon: '💬', label: 'Chat Support', path: '/chat-support', key: 'chat' },
-        { icon: '📱', label: 'Mobile Health', path: '/mobile-health', key: 'mobile' }
+        { icon: '📹', label: 'Video Consultation', path: '/telemedicine', key: 'telemedicine' },
+        { icon: '💬', label: 'Chat Support', path: '/chat-support', key: 'chat' }
       ]
     },
     {
       title: 'Emergency',
       items: [
-        { icon: '�', label: 'Emergency System', path: '/emergency', key: 'emergency', isEmergency: true },
+        { icon: '🚨', label: 'Emergency System', path: '/emergency', key: 'emergency', isEmergency: true },
         { icon: '📞', label: 'Emergency Contacts', path: '/emergency-contacts', key: 'contacts' }
       ]
     }

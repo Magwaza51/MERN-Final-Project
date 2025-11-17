@@ -1,0 +1,347 @@
+.wellness-tracker {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 12px 24px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.tab:hover {
+  background: #e5e7eb;
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Water Tracking */
+.water-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.water-goal-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.water-goal-card h3 {
+  color: white;
+  margin-top: 0;
+}
+
+.water-progress {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.water-glass {
+  width: 120px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.water-level {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+  transition: height 0.5s ease;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.water-amount {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.water-stats {
+  flex: 1;
+}
+
+.water-stats p {
+  margin: 10px 0;
+  font-size: 1.1rem;
+}
+
+.quick-add-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.btn-water {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  border: 2px solid white;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-water:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.goal-setter {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.goal-setter label {
+  font-weight: 600;
+}
+
+.goal-setter input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.9);
+  width: 120px;
+}
+
+.water-history {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+  border-left: 4px solid #3b82f6;
+}
+
+.log-amount {
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.empty-message {
+  text-align: center;
+  color: #9ca3af;
+  padding: 40px;
+}
+
+/* Entries Grid */
+.entries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.entry-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.entry-card:hover {
+  transform: translateY(-5px);
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.entry-header h4 {
+  margin: 0;
+  color: #1f2937;
+}
+
+.entry-content p {
+  margin: 8px 0;
+  color: #4b5563;
+}
+
+.entry-notes {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 6px;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.sleep-card {
+  border-left: 4px solid #8b5cf6;
+}
+
+.exercise-card {
+  border-left: 4px solid #10b981;
+}
+
+.mood-card {
+  border-left: 4px solid #f59e0b;
+}
+
+.mood-Very.Happy {
+  border-left-color: #10b981;
+}
+
+.mood-Happy {
+  border-left-color: #84cc16;
+}
+
+.mood-Neutral {
+  border-left-color: #6b7280;
+}
+
+.mood-Sad {
+  border-left-color: #f59e0b;
+}
+
+.mood-Very.Sad {
+  border-left-color: #ef4444;
+}
+
+.mood-Anxious {
+  border-left-color: #f97316;
+}
+
+.mood-Stressed {
+  border-left-color: #dc2626;
+}
+
+.mood-Calm {
+  border-left-color: #06b6d4;
+}
+
+.mood-Excited {
+  border-left-color: #ec4899;
+}
+
+/* Form Styling */
+.form-card {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .water-container {
+    grid-template-columns: 1fr;
+  }
+
+  .water-progress {
+    flex-direction: column;
+  }
+
+  .quick-add-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .entries-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tabs {
+    justify-content: center;
+  }
+
+  .tab {
+    flex: 1;
+    min-width: 120px;
+  }
+}

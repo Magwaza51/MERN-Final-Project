@@ -19,6 +19,12 @@ const Dashboard = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(10);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState('all');
 
   const fetchHealthData = async () => {
     setLoading(true);
@@ -45,6 +51,7 @@ const Dashboard = () => {
         const data = await response.json();
         setHealthRecords(data.records || []);
         setError('');
+        setLastUpdated(new Date());
         toast.success(`Loaded ${data.records?.length || 0} health records`);
       } else if (response.status === 401) {
         setError('Session expired. Please log in again.');
@@ -67,6 +74,64 @@ const Dashboard = () => {
   const handleRecordAdded = () => {
     setShowAddForm(false);
     fetchHealthData(); // Refresh data
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchHealthData();
+    setRefreshing(false);
+    toast.success('Data refreshed!');
+  };
+
+  // Filter and search functionality
+  const getFilteredRecords = () => {
+    let filtered = healthRecords;
+    
+    // Filter by type
+    if (filterType !== 'all') {
+      filtered = filtered.filter(r => r.type === filterType);
+    }
+    
+    // Search by notes
+    if (searchQuery) {
+      filtered = filtered.filter(r => 
+        r.notes?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.type.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    return filtered;
+  };
+
+  // Pagination logic
+  const filteredRecords = getFilteredRecords();
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = filteredRecords.slice(indexOfFirstRecord, indexOfLastRecord);
+  const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const getTrendArrow = (type) => {
+    const typeRecords = healthRecords.filter(r => r.type === type);
+    if (typeRecords.length < 2) return '';
+    
+    const latest = typeRecords[0];
+    const previous = typeRecords[1];
+    
+    let latestValue, previousValue;
+    
+    if (type === 'blood_pressure') {
+      latestValue = latest.value.systolic;
+      previousValue = previous.value.systolic;
+    } else {
+      latestValue = latest.value.level;
+      previousValue = previous.value.level;
+    }
+    
+    if (latestValue > previousValue) return ' ↑';
+    if (latestValue < previousValue) return ' ↓';
+    return ' →';
   };
 
   const getLatestMetrics = () => {
@@ -120,7 +185,7 @@ const Dashboard = () => {
             <HealthMetricCard
               key={type}
               icon={config.icon}
-              title={config.title}
+              title={config.title + getTrendArrow(type)}
               value={value}
               unit={config.unit}
               status={status}
@@ -138,7 +203,35 @@ const Dashboard = () => {
         return (
           <>
             {renderQuickMetrics()}
-            <HealthDashboard records={healthRecords} analytics={analytics} />
+            <HealthDashboard records={filteredRecords} analytics={analytics} />
+            {filteredRecords.length > recordsPerPage && (
+              <div className="card" style={{ marginTop: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => paginate(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="btn btn-secondary"
+                    style={{ padding: '8px 16px' }}
+                  >
+                    ← Previous
+                  </button>
+                  <span style={{ padding: '8px 16px', fontWeight: 'bold' }}>
+                    Page {currentPage} of {totalPages}
+                  </span>
+                  <span style={{ color: '#666' }}>
+                    ({indexOfFirstRecord + 1}-{Math.min(indexOfLastRecord, filteredRecords.length)} of {filteredRecords.length})
+                  </span>
+                  <button
+                    onClick={() => paginate(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="btn btn-secondary"
+                    style={{ padding: '8px 16px' }}
+                  >
+                    Next →
+                  </button>
+                </div>
+              </div>
+            )}
           </>
         );
       case 'goals':
@@ -171,6 +264,11 @@ const Dashboard = () => {
           <div>
             <h1>🏥 HealthConnect - Free Dashboard</h1>
             <p>Welcome back, <strong>{user?.name}</strong>! Enjoy all premium features completely free.</p>
+            {lastUpdated && (
+              <p style={{ fontSize: '0.9rem', color: '#666' }}>
+                Last updated: {lastUpdated.toLocaleTimeString()}
+              </p>
+            )}
           </div>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <button 
@@ -180,10 +278,12 @@ const Dashboard = () => {
               {showAddForm ? '❌ Cancel' : '➕ Add Reading'}
             </button>
             <button 
-              onClick={fetchHealthData}
+              onClick={handleRefresh}
               className="btn btn-secondary"
+              disabled={refreshing}
+              style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
             >
-              🔄 Refresh
+              {refreshing ? '↻ Refreshing...' : '🔄 Refresh'}
             </button>
             <button 
               onClick={() => exportToCSV(healthRecords, `health-records-${new Date().toISOString().split('T')[0]}.csv`)}
@@ -247,6 +347,59 @@ const Dashboard = () => {
           onRecordAdded={handleRecordAdded}
           onCancel={() => setShowAddForm(false)}
         />
+      )}
+
+      {/* Search and Filter Bar */}
+      {activeTab === 'dashboard' && healthRecords.length > 0 && (
+        <div className="card" style={{ marginBottom: '20px' }}>
+          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ flex: 1, minWidth: '250px' }}>
+              <input
+                type="text"
+                placeholder="🔍 Search records by type or notes..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem'
+                }}
+              />
+            </div>
+            <div>
+              <select
+                value={filterType}
+                onChange={(e) => {
+                  setFilterType(e.target.value);
+                  setCurrentPage(1);
+                }}
+                style={{
+                  padding: '10px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  minWidth: '150px'
+                }}
+              >
+                <option value="all">All Types</option>
+                <option value="blood_pressure">Blood Pressure</option>
+                <option value="blood_sugar">Blood Sugar</option>
+                <option value="heart_rate">Heart Rate</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+                <option value="oxygen_saturation">Oxygen Saturation</option>
+              </select>
+            </div>
+            <div style={{ color: '#6b7280', fontWeight: '600' }}>
+              {filteredRecords.length} record{filteredRecords.length !== 1 ? 's' : ''} found
+            </div>
+          </div>
+        </div>
       )}
 
       {renderTabContent()}
