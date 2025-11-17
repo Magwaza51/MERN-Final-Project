@@ -57,7 +57,19 @@ const Login = () => {
         🏥 Access your free healthcare dashboard
       </p>
       {message && (
-        <div className={`alert ${message.includes('successful') ? 'alert-success' : 'alert-error'}`}>
+        <div 
+          className="alert alert-error" 
+          style={{ 
+            backgroundColor: '#fee2e2', 
+            color: '#dc2626', 
+            padding: '12px', 
+            borderRadius: '8px',
+            marginBottom: '20px',
+            border: '1px solid #fca5a5',
+            fontSize: '14px',
+            fontWeight: '500'
+          }}
+        >
           {message}
         </div>
       )}

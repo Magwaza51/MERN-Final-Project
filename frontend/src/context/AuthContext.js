@@ -141,9 +141,17 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 
-                     error.response?.data?.errors?.[0]?.msg ||
-                     'Invalid email or password. Please try again.';
+      let message = 'Login failed. Please try again.';
+      
+      if (error.response?.status === 401) {
+        message = '❌ Invalid email or password. Please check your credentials.';
+      } else if (error.response?.status === 404) {
+        message = '❌ Account not found. Please register first.';
+      } else if (error.response?.data?.message) {
+        message = '❌ ' + error.response.data.message;
+      } else if (error.response?.data?.errors?.[0]?.msg) {
+        message = '❌ ' + error.response.data.errors[0].msg;
+      }
       
       dispatch({
         type: 'LOGIN_FAIL',
