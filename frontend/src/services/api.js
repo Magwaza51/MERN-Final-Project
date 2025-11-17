@@ -6,7 +6,7 @@ const API_URL = process.env.REACT_APP_API_URL || 'https://mern-final-project-735
 // Create axios instance with base configuration
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 30000, // 30 seconds to handle Render free tier cold starts
   headers: {
     'Content-Type': 'application/json',
   },
