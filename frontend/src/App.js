@@ -18,6 +18,7 @@ import Appointments from './pages/Appointments';
 import DoctorProfile from './pages/DoctorProfile';
 import MedicationTracker from './pages/MedicationTracker';
 import WellnessTracker from './pages/WellnessTracker';
+import HealthAnalytics from './pages/HealthAnalytics';
 import AnalyticsDashboard from './components/AnalyticsDashboard';
 import SocketDemo from './components/SocketDemo';
 import MedicalRecords from './components/MedicalRecords';
@@ -158,8 +159,8 @@ function App() {
                   path="/analytics" 
                   element={
                     <PrivateRoute>
-                      <SidebarLayout title="Health Analytics">
-                        <AnalyticsDashboard />
+                      <SidebarLayout title="📊 Health Analytics">
+                        <HealthAnalytics />
                       </SidebarLayout>
                     </PrivateRoute>
                   } 
